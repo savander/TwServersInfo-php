@@ -1,0 +1,19 @@
+{
+    "name": "savander/twservers",
+    "description": "Teeworlds Server Info",
+    "type": "laravel",
+    "keywords": [
+        "teeworlds",
+        "server",
+        "info"
+    ],
+    "license": "mit",
+    "authors": [
+        {
+            "name": "Adam Jaworski",
+            "email": "savander.pl@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
