@@ -2,8 +2,8 @@
 
 namespace Savander\TwServers;
 
-
 use Savander\TwServers\Server\ServerResolverInterface;
+
 
 /**
  * Class TwServers
@@ -23,11 +23,11 @@ class TwServers
     /**
      * Add Server Object
      *
-     * @var ServerResolverInterface $server
+     * @param \Savander\TwServers\Server\ServerResolverInterface $server
      */
     public function addServer(ServerResolverInterface $server)
     {
-        $this->servers = $server;
+         $this->servers[] = $server;
     }
 
 

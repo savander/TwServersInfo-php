@@ -3,8 +3,6 @@
 namespace Savander\TwServers\Server;
 
 
-use Savander\TwServers\Player\PlayerInterface;
-
 /**
  * Interface ServerResolverInterface
  *
@@ -12,6 +10,8 @@ use Savander\TwServers\Player\PlayerInterface;
  */
 interface ServerResolverInterface
 {
+
+    const DEFAULT_PORT_SERVER = 8303;
 
     /**
      * ServerResolverInterface constructor.
@@ -32,7 +32,7 @@ interface ServerResolverInterface
     /**
      * Return players list
      *
-     * @return PlayerInterface[]
+     * @return \Savander\TwServers\Player\PlayerInterface[]
      */
     public function getPlayers();
 
@@ -40,4 +40,6 @@ interface ServerResolverInterface
      * @param array $PlayerData
      */
     public function addPlayer(array $PlayerData);
+
+
 }
