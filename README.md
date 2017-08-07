@@ -59,8 +59,9 @@ $servers = TwServers::getPlayers(
         new ServerResolver('192.168.0.1')
 );
 
-# Index as a combination of ip and port => ip:port
-$server = $servers->getServers()['192.168.0.1:8303'];
+# Index as a combination of ip and port => ip:port or
+                                           ip (only if standard port 8303)
+$server = $servers->getServer('192.168.0.1')
 
 # Array of Player objects
 $players = $server->getPlayers();
