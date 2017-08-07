@@ -36,7 +36,7 @@ $servers = TwServers::addServers([
     ]
 );
 ```
-or `ServerResolver` class directly to function.
+or `ServerResolver` class directly to function. (You don't have to pass `port`, by default it is `8303`)
 ```php
 $server = TwServers::addServers(
         new ServerResolver('192.168.0.1')
