@@ -27,7 +27,7 @@ class TwServers
      */
     public function addServer(ServerResolverInterface $server)
     {
-        $this->servers[$server] = $server;
+        $this->servers[$server->getIpAddress().':'.$server->getPort()] = $server;
     }
 
 
@@ -36,7 +36,7 @@ class TwServers
      *
      * @return array
      */
-    public function getServers()
+    public function getServers(): array
     {
         return $this->servers;
     }

@@ -14,7 +14,7 @@ class ServerResolver implements ServerResolverInterface
 {
 
     # Time before timeout will appear in connection
-    const CONNECTION_TIMEOUT = 5;
+    const CONNECTION_TIMEOUT = 2;
 
     const DEFAULT_PORT_SERVER = 8303;
 
@@ -256,7 +256,7 @@ class ServerResolver implements ServerResolverInterface
     /**
      * @return string
      */
-    public function getServerName(): string
+    public function getName(): string
     {
         return $this->serverName;
     }
@@ -344,6 +344,4 @@ class ServerResolver implements ServerResolverInterface
     {
         return $this->port;
     }
-
-
 }
