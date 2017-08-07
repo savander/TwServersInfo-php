@@ -141,8 +141,8 @@ class ServerResolver implements ServerResolverInterface
 
         if (sizeof($explodedData) > 9) {
             $this->dataResolver($explodedData);
-            $this->collectedData = true;
         }
+
         return false;
     }
 
@@ -163,14 +163,19 @@ class ServerResolver implements ServerResolverInterface
         $this->maxPlayers = (int)$data[7];
         $this->numClients = (int)$data[8];
         $this->maxClients = (int)$data[9];
-        for ($i = 0; $i < $this->numClients; $i++) {
-            $player                         = [];
-            $player['name']                 = $data[10 + $i * 5];
-            $player['clan']                 = $data[10 + $i * 5 + 1];
-            $player['country']              = (int)$data[10 + $i * 5 + 2];
-            $player['score']                = (int)$data[10 + $i * 5 + 3];
-            $player['isPlayer']             = $data[10 + $i * 5 + 4];
-            $this->players[$player['name']] = new Player($player);
+
+        #check if enough data for players
+        if (sizeof($data) > (9 + $this->numClients * 5)) {
+            for ($i = 0; $i < $this->numClients; $i++) {
+                $player                         = [];
+                $player['name']                 = $data[10 + $i * 5];
+                $player['clan']                 = $data[10 + $i * 5 + 1];
+                $player['country']              = (int)$data[10 + $i * 5 + 2];
+                $player['score']                = (int)$data[10 + $i * 5 + 3];
+                $player['isPlayer']             = $data[10 + $i * 5 + 4];
+                $this->players[$player['name']] = new Player($player);
+            }
+            $this->collectedData = true;
         }
     }
 
