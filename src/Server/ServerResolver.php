@@ -16,6 +16,8 @@ class ServerResolver implements ServerResolverInterface
     # Time before timeout will appear in connection
     const CONNECTION_TIMEOUT = 5;
 
+    const DEFAULT_PORT_SERVER = 8303;
+
     /**
      * PACKET_GETINFO for 0.5 and PACKET_GETINFO3 for 0.6+
      * https://github.com/teeworlds/teeworlds/blob/master/scripts/tw_api.py#L18-L22
@@ -41,6 +43,15 @@ class ServerResolver implements ServerResolverInterface
     # Teeworlds 0.6+
     protected $token;
 
+    # Teeworlds 0.6+
+    protected $numClients;
+
+    # Teeworlds 0.6+
+    protected $maxClients;
+
+    # Teeworlds 0.5
+    protected $progression;
+
     protected $version;
 
     protected $serverName;
@@ -54,15 +65,6 @@ class ServerResolver implements ServerResolverInterface
     protected $numPlayers;
 
     protected $maxPlayers;
-
-    # Teeworlds 0.6+
-    protected $numClients;
-
-    # Teeworlds 0.6+
-    protected $maxClients;
-
-    # Teeworlds 0.5
-    protected $progression;
 
 
     /**

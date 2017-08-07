@@ -10,24 +10,24 @@ namespace Savander\TwServers\Server;
  */
 interface ServerResolverInterface
 {
-
-    const DEFAULT_PORT_SERVER = 8303;
-
     /**
      * ServerResolverInterface constructor.
      *
      * @param string $ipAddress
      * @param        $port
+     * @param        $version
      */
-    public function __construct(string $ipAddress, $port);
+    public function __construct(string $ipAddress, $port, $version);
 
     /**
      * Resolve server by IpAddress
      *
      * @param string $ipAddress
      * @param        $port
+     * @param        $version
+     *
      */
-    public function resolveServer(string $ipAddress, $port);
+    public function resolveServer(string $ipAddress, $port, $version);
 
     /**
      * Return players list
