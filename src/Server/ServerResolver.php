@@ -302,6 +302,11 @@ class ServerResolver implements ServerResolverInterface
     }
 
 
+    /**
+     * Check if server gave data
+     *
+     * @return bool
+     */
     public function collectedData(): bool
     {
         return $this->collectedData;

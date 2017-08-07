@@ -136,4 +136,6 @@ interface ServerResolverInterface
      * @return bool
      */
     public function collectedData(): bool;
+
+
 }

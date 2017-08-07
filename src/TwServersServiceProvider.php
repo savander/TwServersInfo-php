@@ -15,7 +15,7 @@ class TwServersServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bind('Savander\TwServers', function () {
+        $this->app->bind('Savander\TwServers' , function () {
             return new TwServers();
         });
     }
