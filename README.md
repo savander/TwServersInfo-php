@@ -59,14 +59,20 @@ $servers = TwServers::getPlayers(
         new ServerResolver('192.168.0.1')
 );
 
-# Index as a combination of ip and port => ip:port or
-                                           ip (only if standard port 8303)
-$server = $servers->getServer('192.168.0.1')
-
 # Array of Player objects
 $players = $server->getPlayers();
 
 ```
+
+To get specific server from already added, use function `getServer(string $string)`
+```php
+
+# Index as a combination of ip and port => ip:port or
+#                                          ip (only if standard port 8303)
+$server = $servers->getServer('192.168.0.1')
+```
+
+
 `ServerResolver` has some function, which you can use, check `ServerResolverInterface`:
 [**ServerResolverInterface.php**](https://github.com/savander/TwServersInfo-php/blob/master/src/Server/ServerResolverInterface.php)
 
