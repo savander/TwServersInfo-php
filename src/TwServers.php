@@ -87,7 +87,6 @@ class TwServers
         if(strpos($index, ':') === false){
             $index .= ":".ServerResolverInterface::DEFAULT_PORT_SERVER;
         }
-        echo $index;
         if (array_key_exists($index , $this->servers)) {
             return $this->servers[$index];
         }
