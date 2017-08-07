@@ -38,6 +38,7 @@ class ServerResolver implements ServerResolverInterface
      */
     protected $players = [];
 
+    # Teeworlds 0.6+
     protected $token;
 
     protected $version;
@@ -54,9 +55,14 @@ class ServerResolver implements ServerResolverInterface
 
     protected $maxPlayers;
 
+    # Teeworlds 0.6+
     protected $numClients;
 
+    # Teeworlds 0.6+
     protected $maxClients;
+
+    # Teeworlds 0.5
+    protected $progression;
 
 
     /**
@@ -103,6 +109,7 @@ class ServerResolver implements ServerResolverInterface
         if ($serverInfo = $this->getServerData($ipAddress, $port, $data)) {
             $this->parseData($serverInfo, $version);
             dd($this->getPlayers());
+
             return true;
         }
 
@@ -181,13 +188,32 @@ class ServerResolver implements ServerResolverInterface
         }
     }
 
+    /**
+     * Parses data from server for Teeworlds 0.5
+     *
+     * @param array $data
+     */
     public function dataResolver05(array $data)
     {
-
+        $this->version     = $data[0];
+        $this->serverName  = $data[1];
+        $this->mapName     = $data[2];
+        $this->gametype    = $data[3];
+        $this->flags       = $data[4];
+        $this->progression = $data[5];
+        $this->numPlayers  = $data[6];
+        $this->maxPlayers  = $data[7];
+        for ($i = 0; $i < $this->numPlayers; $i++) {
+            $player                         = [];
+            $player['name']                 = $data[8 + $i * 2];
+            $player['score']                = $data[8 + $i * 2 + 1];
+            $this->players[$player['name']] = new Player05($player);
+        }
     }
 
     /**
-     * Parses data from server
+     * Parses data from server for Teeworlds 0.6+
+     *
      * @param array $data
      */
     public function dataResolver06(array $data)
@@ -203,12 +229,12 @@ class ServerResolver implements ServerResolverInterface
         $this->numClients = $data[8];
         $this->maxClients = $data[9];
         for ($i = 0; $i < $this->numClients; $i++) {
-            $player = [];
-            $player['name']        = $data[10 + $i * 5];
-            $player['clan']        = $data[10 + $i * 5 + 1];
-            $player['country']     = $data[10 + $i * 5 + 2];
-            $player['score']       = $data[10 + $i * 5 + 3];
-            $player['isPlayer']    = $data[10 + $i * 5 + 4];
+            $player                         = [];
+            $player['name']                 = $data[10 + $i * 5];
+            $player['clan']                 = $data[10 + $i * 5 + 1];
+            $player['country']              = $data[10 + $i * 5 + 2];
+            $player['score']                = $data[10 + $i * 5 + 3];
+            $player['isPlayer']             = $data[10 + $i * 5 + 4];
             $this->players[$player['name']] = new Player($player);
         }
     }
@@ -292,6 +318,15 @@ class ServerResolver implements ServerResolverInterface
     {
         return $this->maxClients;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProgression()
+    {
+        return $this->progression;
+    }
+
 
 
 }

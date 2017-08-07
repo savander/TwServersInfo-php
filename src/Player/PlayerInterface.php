@@ -28,10 +28,5 @@ interface PlayerInterface
     /**
      * @return mixed
      */
-    public function getClan();
-
-    /**
-     * @return mixed
-     */
     public function getScore();
 }

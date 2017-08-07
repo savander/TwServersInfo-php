@@ -3,7 +3,7 @@
 namespace Savander\TwServers\Player;
 
 /**
- * Class Player
+ * Class Player for version 0.6
  *
  * @package Savander\TwServers\Player
  */
@@ -314,7 +314,7 @@ class Player implements PlayerInterface
      */
     public function getName()
     {
-        // TODO: Implement getName() method.
+        return $this->name;
     }
 
     /**
