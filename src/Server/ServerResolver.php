@@ -16,8 +16,6 @@ class ServerResolver implements ServerResolverInterface
     # Time before timeout will appear in connection
     const CONNECTION_TIMEOUT = 2;
 
-    const DEFAULT_PORT_SERVER = 8303;
-
     const SERVER_FLAG_PASSWORD = 0x1;
 
     /**
@@ -106,7 +104,7 @@ class ServerResolver implements ServerResolverInterface
         string $ipAddress ,
         int $port
     ) {
-        $sock = fsockopen(
+        $socket = fsockopen(
             "udp://$ipAddress" ,
             (int)$port ,
             $errno ,
@@ -115,12 +113,12 @@ class ServerResolver implements ServerResolverInterface
         );
 
         # If no data, timeout after specific time
-        stream_set_timeout($sock , 1);
+        stream_set_timeout($socket , 1);
 
-        if ($sock) {
-            fwrite($sock , self::DATA_TO_SEND);
-            $data = fread($sock , 2048);
-            fclose($sock);
+        if ($socket) {
+            fwrite($socket , self::DATA_TO_SEND);
+            $data = fread($socket , 2048);
+            fclose($socket);
 
             return $data;
         }

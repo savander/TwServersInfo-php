@@ -10,6 +10,7 @@ namespace Savander\TwServers\Server;
  */
 interface ServerResolverInterface
 {
+    const DEFAULT_PORT_SERVER = 8303;
 
     /**
      * ServerResolverInterface constructor.
