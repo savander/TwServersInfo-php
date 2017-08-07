@@ -117,25 +117,6 @@ class ServerResolver implements ServerResolverInterface
     }
 
     /**
-     * Return players list
-     *
-     * @return PlayerInterface[]
-     */
-    public function getPlayers()
-    {
-        return $this->players;
-    }
-
-    /**
-     * @param array $PlayerData
-     */
-    public function addPlayer(array $PlayerData)
-    {
-        // TODO: Implement addPlayer() method.
-    }
-
-
-    /**
      * @param string $ipAddress
      * @param int    $port
      * @param string $data
@@ -240,6 +221,24 @@ class ServerResolver implements ServerResolverInterface
     }
 
     /**
+     * Return players list
+     *
+     * @return PlayerInterface[]
+     */
+    public function getPlayers()
+    {
+        return $this->players;
+    }
+
+    /**
+     * @param array $PlayerData
+     */
+    public function addPlayer(array $PlayerData)
+    {
+        // TODO: Implement addPlayer() method.
+    }
+
+    /**
      * @return mixed
      */
     public function getToken()
@@ -326,7 +325,6 @@ class ServerResolver implements ServerResolverInterface
     {
         return $this->progression;
     }
-
 
 
 }

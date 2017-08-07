@@ -11,16 +11,6 @@ class Player implements PlayerInterface
 {
 
 
-    public $name;
-
-    public $clan;
-
-    public $country;
-
-    public $score;
-
-    public $isPlayer;
-
     /**
      * Array of Countries
      * Thanks to https://code.teele.eu/ for full list of countries
@@ -286,6 +276,16 @@ class Player implements PlayerInterface
             894 => ['ZM', 'Zambia'],
             716 => ['ZW', 'Zimbabwe'],
         ];
+
+    public $name;
+
+    public $clan;
+
+    public $country;
+
+    public $score;
+
+    public $isPlayer;
 
     /**
      * PlayerInterface constructor.

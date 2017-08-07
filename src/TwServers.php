@@ -27,7 +27,7 @@ class TwServers
      */
     public function addServer(ServerResolverInterface $server)
     {
-         $this->servers[] = $server;
+        $this->servers[] = $server;
     }
 
 

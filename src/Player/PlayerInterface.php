@@ -5,12 +5,15 @@ namespace Savander\TwServers\Player;
 
 /**
  * Interface PlayerInterface
+ *
  * @package Savander\TwServers\Player
  */
 interface PlayerInterface
 {
+
     /**
      * PlayerInterface constructor.
+     *
      * @param array $PlayerData
      */
     public function __construct(array $PlayerData);

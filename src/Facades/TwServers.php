@@ -6,10 +6,12 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * Class TwServers
+ *
  * @package Savander\TwServers\Facades
  */
 class TwServers extends Facade
 {
+
     /**
      * @return string
      */
