@@ -44,7 +44,7 @@ $servers = TwServers::addServer(
 
 ```
 
-To list every server use `getServers()` function
+To list every server you added, use `getServers()` function
 
 ```php
   $servers->getServers();
