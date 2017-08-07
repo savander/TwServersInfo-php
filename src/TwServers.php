@@ -20,14 +20,48 @@ class TwServers
      */
     protected $servers = [];
 
+
+    /**
+     * TwServers constructor.
+     */
+    public function __construct()
+    {
+        return $this;
+    }
+
+    /**
+     * TwServers constructor.
+     *
+     * @param \Savander\TwServers\Server\ServerResolverInterface|\Savander\TwServers\Server\ServerResolverInterface[] $servers
+     *
+     * @return $this
+     */
+    public function addServers($servers)
+    {
+        if (is_array($servers)) {
+            foreach ($servers as $server) {
+                $this->addServer($server);
+            }
+        } else {
+            $this->addServer($servers);
+        }
+
+        return $this;
+    }
+
     /**
      * Add Server Object
      *
-     * @param \Savander\TwServers\Server\ServerResolverInterface|\Savander\TwServers\Server\ServerResolverInterface[] $server
+     * @param \Savander\TwServers\Server\ServerResolverInterface $server
+     *
+     * @return $this
      */
     public function addServer(ServerResolverInterface $server)
     {
-        $this->servers[$server->getIpAddress().':'.$server->getPort()] = $server;
+        $this->servers[$server->getIpAddress().':'.$server->getPort()]
+            = $server;
+
+        return $this;
     }
 
 

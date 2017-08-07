@@ -142,6 +142,10 @@ class ServerResolver implements ServerResolverInterface
             $errst,
             self::CONNECTION_TIMEOUT
         );
+
+        # If no data, timeout after specific time
+        stream_set_timeout($sock, self::CONNECTION_TIMEOUT);
+
         if ($sock) {
             fwrite($sock, $data);
             $data = fread($sock, 2048);
