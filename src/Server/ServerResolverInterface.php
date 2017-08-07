@@ -16,19 +16,17 @@ interface ServerResolverInterface
      *
      * @param string $ipAddress
      * @param        $port
-     * @param        $version
      */
-    public function __construct(string $ipAddress, $port, $version);
+    public function __construct(string $ipAddress , $port);
 
     /**
      * Resolve server by IpAddress
      *
      * @param string $ipAddress
      * @param        $port
-     * @param        $version
      *
      */
-    public function resolveServer(string $ipAddress, $port, $version);
+    public function resolveServer(string $ipAddress , $port);
 
     /**
      * Return players list
@@ -37,66 +35,96 @@ interface ServerResolverInterface
      */
     public function getPlayers();
 
+
+    /**
+     * Return token sent to server
+     *
+     * @return string
+     */
+    public function getToken(): string;
+
     /**
      * Return server name
      *
-     * @return mixed
+     * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Return server version
      *
-     * @return mixed
+     * @return string
      */
-    public function getVersion();
+    public function getVersion(): string;
 
     /**
-     * return server player number
+     * return server players number
      *
-     * @return mixed
+     * @return int
      */
-    public function getNumPlayers();
+    public function getNumPlayers(): int;
 
     /**
      * Return server max players variable
      *
-     * @return mixed
+     * @return int
      */
-    public function getMaxPlayers();
+    public function getMaxPlayers(): int;
+
+    /**
+     * return server clients number
+     *
+     * @return int
+     */
+    public function getNumClients(): int;
+
+    /**
+     * Return server max clients variable
+     *
+     * @return int
+     */
+    public function getMaxClients(): int;
+
 
     /**
      * return server map name
      *
-     * @return mixed
+     * @return string
      */
-    public function getMapName();
+    public function getMapName(): string;
 
     /**
      * return server gametype
      *
-     * @return mixed
+     * @return string
      */
-    public function getGameType();
+    public function getGameType(): string;
 
     /**
      * Return server flags
      *
-     * @return mixed
+     * @return int
      */
-    public function getFlags();
+    public function getFlags(): int;
 
     /**
      * Return given ip address
      *
-     * @return mixed
+     * @return string
      */
-    public function getIpAddress();
+    public function getIpAddress(): string;
 
     /**
      * Return given port
      *
-     * @return mixed
+     * @return int
      */
-    public function getPort();
+    public function getPort(): int;
+
+
+    /**
+     * Returns if server has password
+     * @return bool
+     */
+    public function hasPassword(): bool;
 }

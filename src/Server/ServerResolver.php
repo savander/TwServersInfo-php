@@ -21,18 +21,10 @@ class ServerResolver implements ServerResolverInterface
     const SERVER_FLAG_PASSWORD = 0x1;
 
     /**
-     * PACKET_GETINFO for 0.5 and PACKET_GETINFO3 for 0.6+
+     * PACKET_GETINFO3 for 0.6+
      * https://github.com/teeworlds/teeworlds/blob/master/scripts/tw_api.py#L18-L22
-     * Teeworlds 0.5 DATA
      **/
-    const VERSION_05 = 5;
-
-    const VERSION_05_DATA = "\xff\xff\xff\xff\xff\xff\xff\xff\xff\xffgief";
-
-    # Teeworlds 0.6 DATA
-    const VERSION_06 = 6;
-
-    const VERSION_06_DATA = "\xff\xff\xff\xff\xff\xff\xff\xff\xff\xffgie3\x07";
+    const DATA_TO_SEND = "\xff\xff\xff\xff\xff\xff\xff\xff\xff\xffgie3\x07";
 
 
     /**
@@ -42,17 +34,11 @@ class ServerResolver implements ServerResolverInterface
      */
     protected $players = [];
 
-    # Teeworlds 0.6+
     protected $token;
 
-    # Teeworlds 0.6+
     protected $numClients;
 
-    # Teeworlds 0.6+
     protected $maxClients;
-
-    # Teeworlds 0.5
-    protected $progression;
 
     protected $version;
 
@@ -78,14 +64,12 @@ class ServerResolver implements ServerResolverInterface
      *
      * @param string $ipAddress
      * @param        $port
-     * @param int    $version
      */
     public function __construct(
-        string $ipAddress,
-        $port = self::DEFAULT_PORT_SERVER,
-        $version = self::VERSION_06
+        string $ipAddress ,
+        $port = self::DEFAULT_PORT_SERVER
     ) {
-        $this->resolveServer($ipAddress, $port, $version);
+        $this->resolveServer($ipAddress , $port);
         $this->ipAddress = $ipAddress;
         $this->port      = $port;
     }
@@ -95,29 +79,15 @@ class ServerResolver implements ServerResolverInterface
      *
      * @param string $ipAddress
      * @param        $port
-     * @param int    $version
      *
      * @return bool
      */
     public function resolveServer(
-        string $ipAddress,
-        $port = self::DEFAULT_PORT_SERVER,
-        $version = self::VERSION_06
-    ) {
-        # Try connect to server
-        switch ($version) {
-            case self::VERSION_05:
-                $data = self::VERSION_05_DATA;
-                break;
-            case self::VERSION_06:
-                $data = self::VERSION_06_DATA;
-                break;
-            default:
-                $data = self::VERSION_06_DATA;
-        }
-
-        if ($serverInfo = $this->getServerData($ipAddress, $port, $data)) {
-            $this->parseData($serverInfo, $version);
+        string $ipAddress ,
+        $port = self::DEFAULT_PORT_SERVER
+    ): bool {
+        if ($serverInfo = $this->getServerData($ipAddress , $port)) {
+            $this->parseData($serverInfo);
 
             return true;
         }
@@ -128,30 +98,27 @@ class ServerResolver implements ServerResolverInterface
     /**
      * @param string $ipAddress
      * @param int    $port
-     * @param string $data
      *
      * @return bool|string
      */
-    public function getServerData(
-        string $ipAddress,
-        int $port,
-        string $data
+    protected function getServerData(
+        string $ipAddress ,
+        int $port
     ) {
         $sock = fsockopen(
-            "udp://$ipAddress",
-            (int)$port,
-            $errno,
-            $errst,
+            "udp://$ipAddress" ,
+            (int)$port ,
+            $errno ,
+            $errst ,
             self::CONNECTION_TIMEOUT
         );
 
         # If no data, timeout after specific time
-        stream_set_timeout($sock, self::CONNECTION_TIMEOUT);
+        stream_set_timeout($sock , self::CONNECTION_TIMEOUT);
 
         if ($sock) {
-            fwrite($sock, $data);
-            $data = fread($sock, 2048);
-            //            $data = stream_get_contents($sock, 4092);
+            fwrite($sock , self::DATA_TO_SEND);
+            $data = fread($sock , 2048);
             fclose($sock);
 
             return $data;
@@ -162,54 +129,20 @@ class ServerResolver implements ServerResolverInterface
 
     /**
      * @param string $data
-     * @param int    $version
      *
      * @return bool
      */
-    public function parseData(string $data, int $version = self::VERSION_06)
+    public function parseData(string $data)
     {
         # Remove header
-        $data         = substr($data, 14);
-        $explodedData = explode("\x00", $data);
+        $data         = substr($data , 14);
+        $explodedData = explode("\x00" , $data);
 
-
-        switch ($version) {
-            case self::VERSION_05:
-                if (sizeof($explodedData) > 7) {
-                    $this->dataResolver05($explodedData);
-                }
-                break;
-            case self::VERSION_06:
-                if (sizeof($explodedData) > 9) {
-                    $this->dataResolver06($explodedData);
-                }
-                break;
+        if (sizeof($explodedData) > 9) {
+            $this->dataResolver($explodedData);
         }
 
         return false;
-    }
-
-    /**
-     * Parses data from server for Teeworlds 0.5
-     *
-     * @param array $data
-     */
-    public function dataResolver05(array $data)
-    {
-        $this->version     = $data[0];
-        $this->serverName  = $data[1];
-        $this->mapName     = $data[2];
-        $this->gametype    = $data[3];
-        $this->flags       = (int)$data[4];
-        $this->progression = (int)$data[5];
-        $this->numPlayers  = (int)$data[6];
-        $this->maxPlayers  = (int)$data[7];
-        for ($i = 0; $i < $this->numPlayers; $i++) {
-            $player                         = [];
-            $player['name']                 = $data[8 + $i * 2];
-            $player['score']                = (int)$data[8 + $i * 2 + 1];
-            $this->players[$player['name']] = new Player05($player);
-        }
     }
 
     /**
@@ -217,7 +150,7 @@ class ServerResolver implements ServerResolverInterface
      *
      * @param array $data
      */
-    public function dataResolver06(array $data)
+    public function dataResolver(array $data)
     {
         $this->token      = $data[0];
         $this->version    = $data[1];
@@ -331,14 +264,6 @@ class ServerResolver implements ServerResolverInterface
     }
 
     /**
-     * @return int
-     */
-    public function getProgression(): int
-    {
-        return (int)$this->progression;
-    }
-
-    /**
      * Return given server address
      *
      * @return string
@@ -355,7 +280,7 @@ class ServerResolver implements ServerResolverInterface
      */
     public function getPort(): int
     {
-        return $this->port;
+        return (int)$this->port;
     }
 
 
@@ -364,7 +289,7 @@ class ServerResolver implements ServerResolverInterface
      *
      * @return bool
      */
-    public function hasPassword()
+    public function hasPassword(): bool
     {
         return ($this->flags & self::SERVER_FLAG_PASSWORD)
             === self::SERVER_FLAG_PASSWORD;
