@@ -24,12 +24,29 @@ interface PlayerInterface
     public function resolvePlayer(array $PlayerData);
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getName();
+    public function getName(): string;
+
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getScore();
+    public function getClan(): string;
+
+    /**
+     * @return array
+     */
+    public function getCountry(): array;
+
+    /**
+     * @return bool
+     */
+    public function isPlayer(): bool;
+
+
+    /**
+     * @return int
+     */
+    public function getScore(): int;
 }

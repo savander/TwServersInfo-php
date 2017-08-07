@@ -16,7 +16,7 @@ class TwServers
     /**
      * Servers Object List
      *
-     * @var array
+     * @var \Savander\TwServers\Server\ServerResolverInterface|\Savander\TwServers\Server\ServerResolverInterface[]|array
      */
     protected $servers = [];
 
@@ -30,8 +30,6 @@ class TwServers
     }
 
     /**
-     * TwServers constructor.
-     *
      * @param \Savander\TwServers\Server\ServerResolverInterface|\Savander\TwServers\Server\ServerResolverInterface[] $servers
      *
      * @return $this
@@ -40,9 +38,11 @@ class TwServers
     {
         if (is_array($servers)) {
             foreach ($servers as $server) {
-                $this->addServer($server);
+                if ($server instanceof ServerResolverInterface) {
+                    $this->addServer($server);
+                }
             }
-        } else {
+        } else if ($servers instanceof ServerResolverInterface) {
             $this->addServer($servers);
         }
 
@@ -68,10 +68,42 @@ class TwServers
     /**
      * Return all servers
      *
-     * @return array
+     * @return array|\Savander\TwServers\Server\ServerResolverInterface[]
      */
     public function getServers(): array
     {
         return $this->servers;
+    }
+
+    /**
+     * @param string $index
+     *
+     * @return bool|mixed|\Savander\TwServers\Server\ServerResolverInterface
+     */
+    public function getServer(string $index)
+    {
+        if (in_array($index, $this->servers)) {
+            return $this->servers[$index];
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Savander\TwServers\Server\ServerResolverInterface|string $server
+     *
+     * @return bool|\Savander\TwServers\Player\PlayerInterface[]
+     */
+    public function getPlayers($server)
+    {
+        if ($server instanceof ServerResolverInterface) {
+            return $server->getPlayers();
+        } else if (is_string($server)) {
+            if (in_array($server, $this->servers)) {
+                return $this->servers[$server]->getPlayers();
+            }
+        }
+
+        return false;
     }
 }

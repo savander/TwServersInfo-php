@@ -18,6 +18,8 @@ class ServerResolver implements ServerResolverInterface
 
     const DEFAULT_PORT_SERVER = 8303;
 
+    const SERVER_FLAG_PASSWORD = 0x1;
+
     /**
      * PACKET_GETINFO for 0.5 and PACKET_GETINFO3 for 0.6+
      * https://github.com/teeworlds/teeworlds/blob/master/scripts/tw_api.py#L18-L22
@@ -162,7 +164,7 @@ class ServerResolver implements ServerResolverInterface
      * @param string $data
      * @param int    $version
      *
-     * @return bool|void
+     * @return bool
      */
     public function parseData(string $data, int $version = self::VERSION_06)
     {
@@ -170,14 +172,21 @@ class ServerResolver implements ServerResolverInterface
         $data         = substr($data, 14);
         $explodedData = explode("\x00", $data);
 
+
         switch ($version) {
             case self::VERSION_05:
-                $this->dataResolver05($explodedData);
+                if (sizeof($explodedData) > 7) {
+                    $this->dataResolver05($explodedData);
+                }
                 break;
             case self::VERSION_06:
-                $this->dataResolver06($explodedData);
+                if (sizeof($explodedData) > 9) {
+                    $this->dataResolver06($explodedData);
+                }
                 break;
         }
+
+        return false;
     }
 
     /**
@@ -191,14 +200,14 @@ class ServerResolver implements ServerResolverInterface
         $this->serverName  = $data[1];
         $this->mapName     = $data[2];
         $this->gametype    = $data[3];
-        $this->flags       = $data[4];
-        $this->progression = $data[5];
-        $this->numPlayers  = $data[6];
-        $this->maxPlayers  = $data[7];
+        $this->flags       = (int)$data[4];
+        $this->progression = (int)$data[5];
+        $this->numPlayers  = (int)$data[6];
+        $this->maxPlayers  = (int)$data[7];
         for ($i = 0; $i < $this->numPlayers; $i++) {
             $player                         = [];
             $player['name']                 = $data[8 + $i * 2];
-            $player['score']                = $data[8 + $i * 2 + 1];
+            $player['score']                = (int)$data[8 + $i * 2 + 1];
             $this->players[$player['name']] = new Player05($player);
         }
     }
@@ -215,17 +224,17 @@ class ServerResolver implements ServerResolverInterface
         $this->serverName = $data[2];
         $this->mapName    = $data[3];
         $this->gametype   = $data[4];
-        $this->flags      = $data[5];
-        $this->numPlayers = $data[6];
-        $this->maxPlayers = $data[7];
-        $this->numClients = $data[8];
-        $this->maxClients = $data[9];
+        $this->flags      = (int)$data[5];
+        $this->numPlayers = (int)$data[6];
+        $this->maxPlayers = (int)$data[7];
+        $this->numClients = (int)$data[8];
+        $this->maxClients = (int)$data[9];
         for ($i = 0; $i < $this->numClients; $i++) {
             $player                         = [];
             $player['name']                 = $data[10 + $i * 5];
             $player['clan']                 = $data[10 + $i * 5 + 1];
-            $player['country']              = $data[10 + $i * 5 + 2];
-            $player['score']                = $data[10 + $i * 5 + 3];
+            $player['country']              = (int)$data[10 + $i * 5 + 2];
+            $player['score']                = (int)$data[10 + $i * 5 + 3];
             $player['isPlayer']             = $data[10 + $i * 5 + 4];
             $this->players[$player['name']] = new Player($player);
         }
@@ -347,5 +356,17 @@ class ServerResolver implements ServerResolverInterface
     public function getPort(): int
     {
         return $this->port;
+    }
+
+
+    /**
+     * Password has password?
+     *
+     * @return bool
+     */
+    public function hasPassword()
+    {
+        return ($this->flags & self::SERVER_FLAG_PASSWORD)
+            === self::SERVER_FLAG_PASSWORD;
     }
 }

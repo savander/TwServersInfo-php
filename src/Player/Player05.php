@@ -51,4 +51,27 @@ class Player05 implements PlayerInterface
         return (int)$this->score;
     }
 
+    /**
+     * @return string
+     */
+    public function getClan(): string
+    {
+        return "";
+    }
+
+    /**
+     * @return array
+     */
+    public function getCountry(): array
+    {
+        return ['default', 'none'];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPlayer(): bool
+    {
+        return true;
+    }
 }
