@@ -304,49 +304,49 @@ class Player implements PlayerInterface
     {
         $this->name     = $PlayerData['name'];
         $this->clan     = $PlayerData['clan'];
-        $this->score    = $PlayerData['score'];
-        $this->country  = $PlayerData['country'];
+        $this->score    = (int)$PlayerData['score'];
+        $this->country  = (int)$PlayerData['country'];
         $this->isPlayer = ($PlayerData['isPlayer']) ? true : false;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getClan()
+    public function getClan(): string
     {
         return $this->clan;
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function getCountry()
+    public function getCountry(): array
     {
         return self::$countries[$this->getCountry()];
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getScore()
+    public function getScore(): int
     {
-        return $this->score;
+        return (int)$this->score;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function isPlayer()
+    public function isPlayer(): bool
     {
-        return $this->isPlayer;
+        return (int)$this->isPlayer;
     }
 
 }

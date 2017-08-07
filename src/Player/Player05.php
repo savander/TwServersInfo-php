@@ -32,23 +32,23 @@ class Player05 implements PlayerInterface
     public function resolvePlayer(array $PlayerData)
     {
         $this->name  = $PlayerData['name'];
-        $this->score = $PlayerData['score'];
+        $this->score = (int)$PlayerData['score'];
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getScore()
+    public function getScore(): int
     {
-        return $this->score;
+        return (int)$this->score;
     }
 
 }

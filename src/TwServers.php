@@ -23,11 +23,11 @@ class TwServers
     /**
      * Add Server Object
      *
-     * @param \Savander\TwServers\Server\ServerResolverInterface $server
+     * @param \Savander\TwServers\Server\ServerResolverInterface|\Savander\TwServers\Server\ServerResolverInterface[] $server
      */
     public function addServer(ServerResolverInterface $server)
     {
-        $this->servers[] = $server;
+        $this->servers[$server] = $server;
     }
 
 

@@ -66,6 +66,10 @@ class ServerResolver implements ServerResolverInterface
 
     protected $maxPlayers;
 
+    protected $ipAddress;
+
+    protected $port;
+
 
     /**
      * ServerResolverInterface constructor.
@@ -80,6 +84,8 @@ class ServerResolver implements ServerResolverInterface
         $version = self::VERSION_06
     ) {
         $this->resolveServer($ipAddress, $port, $version);
+        $this->ipAddress = $ipAddress;
+        $this->port      = $port;
     }
 
     /**
@@ -110,7 +116,6 @@ class ServerResolver implements ServerResolverInterface
 
         if ($serverInfo = $this->getServerData($ipAddress, $port, $data)) {
             $this->parseData($serverInfo, $version);
-            dd($this->getPlayers());
 
             return true;
         }
@@ -139,7 +144,7 @@ class ServerResolver implements ServerResolverInterface
         );
         if ($sock) {
             fwrite($sock, $data);
-            $data = fread($sock, 4092);
+            $data = fread($sock, 2048);
             //            $data = stream_get_contents($sock, 4092);
             fclose($sock);
 
@@ -225,107 +230,119 @@ class ServerResolver implements ServerResolverInterface
     /**
      * Return players list
      *
-     * @return PlayerInterface[]
+     * @return \Savander\TwServers\Player\PlayerInterface[]
      */
-    public function getPlayers()
+    public function getPlayers(): array
     {
         return $this->players;
     }
 
     /**
-     * @param array $PlayerData
+     * @return string
      */
-    public function addPlayer(array $PlayerData)
-    {
-        // TODO: Implement addPlayer() method.
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getToken()
+    public function getToken(): string
     {
         return $this->token;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getServerName()
+    public function getServerName(): string
     {
         return $this->serverName;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getMapName()
+    public function getMapName(): string
     {
         return $this->mapName;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getGametype()
+    public function getGametype(): string
     {
         return $this->gametype;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getFlags()
+    public function getFlags(): int
     {
-        return $this->flags;
+        return (int)$this->flags;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getNumPlayers()
+    public function getNumPlayers(): int
     {
-        return $this->numPlayers;
+        return (int)$this->numPlayers;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getMaxPlayers()
+    public function getMaxPlayers(): int
     {
-        return $this->maxPlayers;
+        return (int)$this->maxPlayers;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getNumClients()
+    public function getNumClients(): int
     {
-        return $this->numClients;
+        return (int)$this->numClients;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getMaxClients()
+    public function getMaxClients(): int
     {
-        return $this->maxClients;
+        return (int)$this->maxClients;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getProgression()
+    public function getProgression(): int
     {
-        return $this->progression;
+        return (int)$this->progression;
+    }
+
+    /**
+     * Return given server address
+     *
+     * @return string
+     */
+    public function getIpAddress(): string
+    {
+        return $this->ipAddress;
+    }
+
+    /**
+     * Return given port
+     *
+     * @return int
+     */
+    public function getPort(): int
+    {
+        return $this->port;
     }
 
 
