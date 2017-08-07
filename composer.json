@@ -2,6 +2,7 @@
     "name": "savander/twservers",
     "description": "Teeworlds Server Info",
     "type": "library",
+    "minimum-stability": "stable",
 	"homepage": "https://github.com/savander/TwServersInfo-php",
     "keywords": [
         "teeworlds",
