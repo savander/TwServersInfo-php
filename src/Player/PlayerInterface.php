@@ -17,7 +17,6 @@ interface PlayerInterface
 
     /**
      * @param array $PlayerData
-     * @return mixed
      */
     public function resolvePlayer(array $PlayerData);
 
@@ -30,11 +29,6 @@ interface PlayerInterface
      * @return mixed
      */
     public function getClan();
-
-    /**
-     * @return mixed
-     */
-    public function getFlag();
 
     /**
      * @return mixed

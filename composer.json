@@ -1,19 +1,29 @@
 {
     "name": "savander/twservers",
     "description": "Teeworlds Server Info",
-    "type": "laravel",
+    "type": "library",
+	"homepage": "https://github.com/savander/TwServersInfo-php",
     "keywords": [
         "teeworlds",
         "server",
-        "info"
+        "info",
+		"laravel"
     ],
-    "license": "mit",
+    "license": "MIT",
     "authors": [
         {
             "name": "Adam Jaworski",
-            "email": "savander.pl@gmail.com"
+            "email": "savander.pl@gmail.com",
+			"homepage": "http://codrig.com",
+			"role": "Developer"
         }
     ],
-    "minimum-stability": "dev",
-    "require": {}
+    "require": {
+		"php": "^7.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Savander\\TwServers\\": "src"
+		}
+	}
 }
