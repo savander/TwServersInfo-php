@@ -58,6 +58,7 @@ class ServerResolver implements ServerResolverInterface
 
     protected $port;
 
+    protected $collectedData = false;
 
     /**
      * ServerResolverInterface constructor.
@@ -114,7 +115,7 @@ class ServerResolver implements ServerResolverInterface
         );
 
         # If no data, timeout after specific time
-        stream_set_timeout($sock , self::CONNECTION_TIMEOUT);
+        stream_set_timeout($sock , 1);
 
         if ($sock) {
             fwrite($sock , self::DATA_TO_SEND);
@@ -140,8 +141,8 @@ class ServerResolver implements ServerResolverInterface
 
         if (sizeof($explodedData) > 9) {
             $this->dataResolver($explodedData);
+            $this->collectedData = true;
         }
-
         return false;
     }
 
@@ -293,5 +294,11 @@ class ServerResolver implements ServerResolverInterface
     {
         return ($this->flags & self::SERVER_FLAG_PASSWORD)
             === self::SERVER_FLAG_PASSWORD;
+    }
+
+
+    public function collectedData(): bool
+    {
+        return $this->collectedData;
     }
 }

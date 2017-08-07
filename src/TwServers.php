@@ -58,8 +58,10 @@ class TwServers
      */
     public function addServer(ServerResolverInterface $server)
     {
-        $this->servers[$server->getIpAddress().':'.$server->getPort()]
-            = $server;
+        if ($server->collectedData()) {
+            $this->servers[$server->getIpAddress().':'.$server->getPort()]
+                = $server;
+        }
 
         return $this;
     }
@@ -82,7 +84,7 @@ class TwServers
      */
     public function getServer(string $index)
     {
-        if (in_array($index, $this->servers)) {
+        if (in_array($index , $this->servers)) {
             return $this->servers[$index];
         }
 
@@ -99,7 +101,7 @@ class TwServers
         if ($server instanceof ServerResolverInterface) {
             return $server->getPlayers();
         } else if (is_string($server)) {
-            if (in_array($server, $this->servers)) {
+            if (in_array($server , $this->servers)) {
                 return $this->servers[$server]->getPlayers();
             }
         }

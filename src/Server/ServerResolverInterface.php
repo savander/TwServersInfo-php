@@ -124,7 +124,16 @@ interface ServerResolverInterface
 
     /**
      * Returns if server has password
+     *
      * @return bool
      */
     public function hasPassword(): bool;
+
+
+    /**
+     * Checks if server gives data
+     *
+     * @return bool
+     */
+    public function collectedData(): bool;
 }
