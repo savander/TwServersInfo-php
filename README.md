@@ -29,6 +29,8 @@ Also, add the Facade to the `aliases` array in `config/app.php`
 ## Usage (examples based on Laravel Facade)
 
 ### Teeworlds Servers
+Gathering information from server/servers can consume some time.
+
 You can **add one or few servers** to object by passing `array`  
 ```php
 $servers = TwServers::addServers([
@@ -82,6 +84,8 @@ If server has players, ServerResolver stores PlayerInterface, which has some fun
 
 
 ### Teeworlds Master Servers
+Gathering information from master servers can consume some time.
+
 
 You can **add one or few servers** to object by passing `array`  
 ```php
