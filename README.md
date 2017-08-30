@@ -1,6 +1,6 @@
 # TwServersInfo-php
 PHP Library (+Laravel) - Teeworlds Servers Info
-
+This package, allows you to gather information from Teeworlds Servers as well as from TeeWorlds Master Servers. 
 ## Requirements
 
 - PHP ^7.0
@@ -28,6 +28,7 @@ Also, add the Facade to the `aliases` array in `config/app.php`
 
 ## Usage (examples based on Laravel Facade)
 
+### Teeworlds Servers
 You can **add one or few servers** to object by passing `array`  
 ```php
 $servers = TwServers::addServers([
@@ -80,4 +81,46 @@ If server has players, ServerResolver stores PlayerInterface, which has some fun
 [**PlayerInterface**](https://github.com/savander/TwServersInfo-php/blob/master/src/Player/PlayerInterface.php)
 
 
+### Teeworlds Master Servers
+
+You can **add one or few servers** to object by passing `array`  
+```php
+$servers = TwServers::addMasterServers([
+       new MasterServerResolver('master1.teeworlds.com', 8300),
+       new MasterServerResolver('master2.teeworlds.com', 8300),
+       new MasterServerResolver('master3.teeworlds.com'),
+       new MasterServerResolver('master4.teeworlds.com')
+    ]
+);
+```
+or `MasterServerResolver` class directly to function. (You don't have to pass `port`, by default it is `8300`)
+```php
+$servers = TwServers::addMasterServer(
+        new MasterServerResolver('master2.teeworlds.com')
+);
+
+```
+
+To list every server you added, use `getMasterServers()` function
+
+```php
+  $servers->getMasterServers();
+
+```
+It will return list of servers you passed to object, with data from masterserver. 
+
+
+To get specific masterserver from already added, use function `getMasterServer(string $string)`
+```php
+
+# Index as a combination of ip and port => ip:port or
+#                                          ip (only if standard port 8300)
+$server = $servers->getMasterServer('master2.teeworlds.com')
+```
+
+
+`MasterServerResolver` has some function, which you can use, check `MasterServerResolverInterface`:
+[**MasterServerResolverInterface.php**](https://github.com/savander/TwServersInfo-php/blob/master/src/MasterServer/MasterServerResolverInterface.php)
+
+___
 **Feel free to add your own version based on those interfaces.**
