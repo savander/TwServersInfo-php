@@ -91,7 +91,7 @@ class TwServers
      */
     public function getServer(string $index)
     {
-        if(strpos($index, ':') === false){
+        if (strpos($index , ':') === false) {
             $index .= ":".ServerResolverInterface::DEFAULT_PORT_SERVER;
         }
         if (array_key_exists($index , $this->servers)) {
@@ -120,8 +120,9 @@ class TwServers
     }
 
 
-    public function getServersFromMaster(MasterServerResolverInterface $masterServer)
-    {
+    public function getServersFromMaster(
+        MasterServerResolverInterface $masterServer
+    ) {
         return $masterServer->getServers();
     }
 
@@ -135,7 +136,8 @@ class TwServers
     public function addMasterServer(MasterServerResolverInterface $masterServer)
     {
         if ($masterServer->collectedData()) {
-            $this->masterServers[$masterServer->getIpAddress().':'.$masterServer->getPort()]
+            $this->masterServers[$masterServer->getIpAddress().':'
+            .$masterServer->getPort()]
                 = $masterServer;
         }
 

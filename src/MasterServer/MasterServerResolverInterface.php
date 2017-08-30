@@ -10,6 +10,7 @@ namespace Savander\TwServers\MasterServer;
  */
 interface MasterServerResolverInterface
 {
+
     const DEFAULT_PORT_SERVER = 8300;
 
     /**
@@ -58,7 +59,6 @@ interface MasterServerResolverInterface
      * @return bool
      */
     public function collectedData(): bool;
-
 
 
 }

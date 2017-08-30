@@ -63,10 +63,11 @@ class MasterServerResolver implements MasterServerResolverInterface
     ): bool {
         if ($serverList = $this->getMasterServerData($ipAddress , $port)) {
 
-            foreach($serverList as $item){
+            foreach ($serverList as $item) {
                 $this->parseData($item);
             }
             $this->collectedData = true;
+
             return true;
         }
 
@@ -100,8 +101,8 @@ class MasterServerResolver implements MasterServerResolverInterface
 
             $data = [];
 
-            while(strlen($response) >= 1) {
-                $data[] = $response;
+            while (strlen($response) >= 1) {
+                $data[]   = $response;
                 $response = fread($socket , 2048);
             }
 
@@ -121,7 +122,7 @@ class MasterServerResolver implements MasterServerResolverInterface
     public function parseData(string $data)
     {
         # Remove header
-        $data = substr($data , 14);
+        $data       = substr($data , 14);
         $numServers = strlen($data) / 18;
 
         for ($iterator = 0; $iterator <= $numServers; $iterator++) {
@@ -144,7 +145,7 @@ class MasterServerResolver implements MasterServerResolverInterface
                 $ipAddress ,
                 "ipAddress" => $ipAddress ,
                 $port ,
-                "port"      => $port,
+                "port"      => $port ,
             ];
         }
     }
