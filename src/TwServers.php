@@ -172,4 +172,21 @@ class TwServers
     {
         return $this->masterServers;
     }
+
+    /**
+     * @param string $index
+     *
+     * @return bool|mixed|\Savander\TwServers\MasterServer\MasterServerResolverInterface
+     */
+    public function getMasterServer(string $index)
+    {
+        if (strpos($index , ':') === false) {
+            $index .= ":".MasterServerResolverInterface::DEFAULT_PORT_SERVER;
+        }
+        if (array_key_exists($index , $this->masterServers)) {
+            return $this->masterServers[$index];
+        }
+
+        return false;
+    }
 }
