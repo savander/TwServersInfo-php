@@ -2,6 +2,7 @@
 
 namespace Savander\TwServers;
 
+use Savander\TwServers\MasterServer\MasterServerResolverInterface;
 use Savander\TwServers\Server\ServerResolverInterface;
 
 
@@ -20,6 +21,12 @@ class TwServers
      */
     protected $servers = [];
 
+    /**
+     * Servers Object List
+     *
+     * @var \Savander\TwServers\MasterServer\MasterServerResolverInterface|\Savander\TwServers\MasterServer\MasterServerResolverInterface[]|array
+     */
+    protected $masterServers = [];
 
     /**
      * TwServers constructor.
@@ -110,5 +117,57 @@ class TwServers
         }
 
         return false;
+    }
+
+
+    public function getServersFromMaster(MasterServerResolverInterface $masterServer)
+    {
+        return $masterServer->getServers();
+    }
+
+    /**
+     * Add Server Object
+     *
+     * @param \Savander\TwServers\MasterServer\MasterServerResolverInterface $masterServer
+     *
+     * @return $this
+     */
+    public function addMasterServer(MasterServerResolverInterface $masterServer)
+    {
+        if ($masterServer->collectedData()) {
+            $this->masterServers[$masterServer->getIpAddress().':'.$masterServer->getPort()]
+                = $masterServer;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \Savander\TwServers\MasterServer\MasterServerResolverInterface|\Savander\TwServers\MasterServer\MasterServerResolverInterface[] $masterServers
+     *
+     * @return $this
+     */
+    public function addMasterServers($masterServers)
+    {
+        if (is_array($masterServers)) {
+            foreach ($masterServers as $server) {
+                if ($server instanceof MasterServerResolverInterface) {
+                    $this->addMasterServer($server);
+                }
+            }
+        } else if ($masterServers instanceof MasterServerResolverInterface) {
+            $this->addMasterServer($masterServers);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @return array|\Savander\TwServers\MasterServer\MasterServerResolverInterface|\Savander\TwServers\MasterServer\MasterServerResolverInterface[]
+     */
+    public function getMasterServers()
+    {
+        return $this->masterServers;
     }
 }
