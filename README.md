@@ -6,6 +6,7 @@ This package, allows you to gather information from Teeworlds Servers as well as
 - PHP ^7.0
 
 ## Composer
+
 Require this package with composer using the following command:
 ```
 composer require savander/twservers
@@ -16,6 +17,10 @@ composer require --dev savander/twservers
 ```
 
 #### for Laravel
+##### Laravel 5.5+
+Laravel 5.5 introduced package autodiscover. It means, that you don't need to aliases and providers to your app by your own.
+
+##### For Laravel 5.4~
 After updating composer, add the service provider to the `providers` array in `config/app.php`
 ```php
 Savander\TwServers\TwServersServiceProvider::class,
