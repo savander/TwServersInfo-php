@@ -11,6 +11,16 @@
 		"laravel"
     ],
     "license": "MIT",
+    "extra" : {
+		"laravel": {
+			"providers": [
+				"Savander\\TwServers\\TwServersServiceProvider"
+			],
+			"aliases": {
+				"TwServers": "Savander\\TwServers\\Facades\\TwServers"
+			}
+		}
+    },
     "authors": [
         {
             "name": "Adam Jaworski",
